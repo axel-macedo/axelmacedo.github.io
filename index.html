@@ -208,14 +208,14 @@
       background: var(--wax);
       color: var(--raise);
     }
-    .intro, .reply, .verse, .colophon {
+    .intro, .reply, .verse {
       max-width: 48rem;
       margin: 0 auto;
       padding-left: 1.25rem;
       padding-right: 1.25rem;
     }
     @media (min-width: 640px) {
-      .intro, .reply, .verse, .colophon { padding-left: 2rem; padding-right: 2rem; }
+      .intro, .reply, .verse { padding-left: 2rem; padding-right: 2rem; }
     }
     .intro { padding-top: 3rem; padding-bottom: 1rem; }
     .blurb {
@@ -257,19 +257,6 @@
     .verse-actions { margin-top: 1rem; display: flex; gap: 0.25rem; }
     .reply { padding-top: 2.5rem; }
     .reply p { margin: 0.75rem 0 0; max-width: 36rem; color: var(--muted); }
-    .colophon {
-      border-top: 1px solid var(--line);
-      padding-top: 3.5rem;
-      padding-bottom: 3.5rem;
-    }
-    .colophon h2 {
-      margin: 0;
-      font-family: var(--display);
-      font-weight: 500;
-      font-size: 1.5rem;
-    }
-    .colophon p { max-width: 36rem; color: var(--muted); }
-    .colophon a { color: var(--fg); }
     .dwell {
       flex: 1;
       display: flex;
@@ -545,11 +532,6 @@
           '<span class="num">' + pad(n) + '</span><div><p>' + rich(text) + '</p><div class="verse-actions"><button class="ghost" type="button" data-copy="' + n + '">Copy</button><button class="ghost" type="button" data-listen="' + n + '">Listen</button></div></div>';
         page.append(article);
       });
-
-      const colophon = document.createElement("footer");
-      colophon.className = "colophon";
-      colophon.innerHTML = '<h2>Set for Axel Macedo.</h2><p>King James Version, 1611. Public domain. The reading place is kept on this device, and nowhere else.</p><p><a href="https://github.com/axel-macedo">github.com/axel-macedo</a></p>';
-      page.append(colophon);
 
       page.addEventListener("click", (event) => {
         const copy = event.target.closest("[data-copy]");
