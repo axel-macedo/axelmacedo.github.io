@@ -1,3 +1,5 @@
 # Psalm 91
 
-Minimal GitHub Pages website displaying “PSALM 91” on a plain white background
+A quiet reading of Psalm 91 (King James Version) for [axelmacedo.com](https://axelmacedo.com).
+
+The site is a single static page, published with GitHub Pages from the root of `main`.

@@ -2,42 +2,629 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Psalm 91">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Psalm 91</title>
+  <meta name="description" content="Psalm 91, King James Version — a quiet reading set for Axel Macedo.">
+  <meta name="theme-color" content="#f4efe6">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+  <script>try{if(localStorage.getItem("psalm91:theme")==="night")document.documentElement.dataset.theme="night"}catch(e){}</script>
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg: #f4efe6;
+      --fg: #1b1714;
+      --muted: #6e655c;
+      --line: #d8cfc2;
+      --wax: #8d3f31;
+      --raise: #faf6f0;
+      --display: "Cormorant Garamond", "Palatino Linotype", Palatino, serif;
+      --body: "Literata", "Iowan Old Style", Georgia, serif;
     }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
+    [data-theme="night"] {
+      --bg: #12110e;
+      --fg: #efe7db;
+      --muted: #a89c8d;
+      --line: #2e2924;
+      --wax: #e2b48f;
+      --raise: #1a1814;
+      color-scheme: dark;
     }
-
+    * { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+      color: var(--fg);
+    }
     body {
-      background: #fff;
-      color: #000;
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+    }
+    button, a { color: inherit; }
+    button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+    button {
+      background: none;
+      border: 0;
+      font: inherit;
+      padding: 0;
+    }
+    button:focus-visible, a:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 3px;
+    }
+    ::selection {
+      background: color-mix(in srgb, var(--wax) 28%, transparent);
+      color: var(--fg);
+    }
+    .cover, .room { min-height: 100vh; }
+    .cover { display: flex; flex-direction: column; }
+    .top {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-family: Georgia, "Times New Roman", serif;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
     }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2.5rem, 8vw, 7rem);
-      font-weight: 400;
-      letter-spacing: 0.08em;
+    .name {
+      font-family: var(--display);
+      font-size: 1.125rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.75rem;
+      padding: 0 0.75rem;
+      font-size: 0.875rem;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: var(--line);
+    }
+    .ghost:disabled { color: var(--muted); text-decoration: none; cursor: default; }
+    .stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      padding: 0 1.5rem 4rem;
+    }
+    .mark {
+      font-family: var(--display);
+      font-size: 0.875rem;
+      letter-spacing: 0.42em;
+      color: var(--wax);
+      margin: 0;
+    }
+    .mark.quiet { color: var(--muted); }
+    h1 {
+      margin: 0.5rem 0 0;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 6rem;
+      line-height: 1;
+    }
+    @media (min-width: 640px) { h1 { font-size: 8rem; } }
+    .lead {
+      margin: 2rem 0 0;
+      max-width: 36rem;
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.5rem;
+      line-height: 1.3;
+      text-wrap: balance;
+    }
+    @media (min-width: 640px) { .lead { font-size: 1.875rem; } }
+    .actions {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+      .actions { flex-direction: row; }
+    }
+    .solid, .outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      min-width: 11rem;
+      padding: 0 1.5rem;
+      font-family: var(--display);
+      font-size: 1.125rem;
+      letter-spacing: 0.04em;
+    }
+    .solid { background: var(--fg); color: var(--bg); border: 1px solid var(--fg); }
+    .outline { border: 1px solid var(--line); }
+    .continue {
+      margin-top: 1.25rem;
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: var(--line);
+      font-size: 1rem;
+    }
+    .foot {
+      padding: 0 1.5rem 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    .bar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar-row {
+      max-width: 64rem;
+      margin: 0 auto;
+      height: 3.5rem;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .word {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+    .bar-actions { display: flex; gap: 0.25rem; }
+    .meter { height: 1px; background: var(--line); }
+    .meter > span { display: block; height: 1px; background: var(--wax); }
+    .index {
+      border-bottom: 1px solid var(--line);
+      background: var(--bg);
+    }
+    .index ol {
+      list-style: none;
+      margin: 0 auto;
+      padding: 0.5rem 0.75rem;
+      max-width: 64rem;
+      display: flex;
+      gap: 0.25rem;
+      overflow-x: auto;
+    }
+    .index button {
+      width: 2.75rem;
+      height: 2.75rem;
+      font-family: var(--display);
+      font-size: 1.125rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+    }
+    .index button[aria-current="true"] {
+      background: var(--wax);
+      color: var(--raise);
+    }
+    .intro, .reply, .verse, .colophon {
+      max-width: 48rem;
+      margin: 0 auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .intro, .reply, .verse, .colophon { padding-left: 2rem; padding-right: 2rem; }
+    }
+    .intro { padding-top: 3rem; padding-bottom: 1rem; }
+    .blurb {
+      margin: 1rem 0 0;
+      max-width: 36rem;
+      color: var(--muted);
+      font-size: 1.125rem;
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
+    .verse {
+      display: flex;
+      gap: 1rem;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-top: 1px solid var(--line);
+      scroll-margin-top: 9rem;
+    }
+    @media (min-width: 640px) {
+      .verse { gap: 1.5rem; padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    }
+    .num {
+      width: 3rem;
+      flex: none;
+      padding-top: 0.25rem;
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+    }
+    .verse.is-current .num { color: var(--wax); }
+    .verse p {
+      margin: 0;
+      font-size: 1.3125rem;
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
+    .lord { font-variant-caps: small-caps; letter-spacing: 0.04em; }
+    .verse-actions { margin-top: 1rem; display: flex; gap: 0.25rem; }
+    .reply { padding-top: 2.5rem; }
+    .reply p { margin: 0.75rem 0 0; max-width: 36rem; color: var(--muted); }
+    .colophon {
+      border-top: 1px solid var(--line);
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
+    }
+    .colophon h2 {
+      margin: 0;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 1.5rem;
+    }
+    .colophon p { max-width: 36rem; color: var(--muted); }
+    .colophon a { color: var(--fg); }
+    .dwell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 7.75rem);
+    }
+    .dwell-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      touch-action: pan-y;
+    }
+    .dwell-num {
+      margin: 0.75rem 0 0;
+      font-family: var(--display);
+      font-size: 3rem;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .dwell-text {
+      margin: 2rem 0 0;
+      max-width: 42rem;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 1.875rem;
+      line-height: 1.25;
+      text-wrap: balance;
+    }
+    @media (min-width: 640px) { .dwell-text { font-size: 3rem; } }
+    .count { margin: 2rem 0 0; color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+    .dwell-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      border-top: 1px solid var(--line);
+      padding: 0.75rem;
+    }
+    @media (min-width: 640px) { .dwell-bar { padding-left: 1.5rem; padding-right: 1.5rem; } }
+    [hidden] { display: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>PSALM 91</h1>
-  </main>
+  <div class="cover" id="cover">
+    <header class="top">
+      <a class="name" href="https://github.com/axel-macedo">Axel Macedo</a>
+      <button class="ghost" id="cover-theme" type="button">Night</button>
+    </header>
+    <main class="stage">
+      <p class="mark quiet">PSALM</p>
+      <h1>91</h1>
+      <p class="lead">He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.</p>
+      <div class="actions">
+        <button class="solid" id="begin" type="button">Begin reading</button>
+        <button class="outline" id="one" type="button">One verse</button>
+      </div>
+      <button class="continue" id="resume" type="button" hidden>Continue</button>
+    </main>
+    <footer class="foot">King James Version, 1611 · sixteen verses</footer>
+  </div>
+
+  <div class="room" id="room" hidden>
+    <header class="bar">
+      <div class="bar-row">
+        <button class="word" id="home" type="button">Psalm 91</button>
+        <div class="bar-actions">
+          <button class="ghost" id="mode" type="button">One verse</button>
+          <button class="ghost" id="theme" type="button">Night</button>
+        </div>
+      </div>
+      <div class="meter" aria-hidden="true"><span id="meter"></span></div>
+    </header>
+    <nav class="index" aria-label="Verses"><ol id="index"></ol></nav>
+    <div id="page"></div>
+    <div class="dwell" id="dwell" hidden>
+      <div class="dwell-stage" id="dwell-stage">
+        <p class="mark" id="dwell-kicker">PSALM 91</p>
+        <p class="dwell-num" id="dwell-num">01</p>
+        <p class="dwell-text" id="dwell-text"></p>
+        <p class="count" id="dwell-count"></p>
+      </div>
+      <div class="dwell-bar">
+        <button class="ghost" id="prev" type="button">Previous</button>
+        <div>
+          <button class="ghost" id="dwell-copy" type="button">Copy</button>
+          <button class="ghost" id="dwell-listen" type="button">Listen</button>
+        </div>
+        <button class="ghost" id="next" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const VERSES = [
+      "He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.",
+      "I will say of the LORD, He is my refuge and my fortress: my God; in him will I trust.",
+      "Surely he shall deliver thee from the snare of the fowler, and from the noisome pestilence.",
+      "He shall cover thee with his feathers, and under his wings shalt thou trust: his truth shall be thy shield and buckler.",
+      "Thou shalt not be afraid for the terror by night; nor for the arrow that flieth by day;",
+      "Nor for the pestilence that walketh in darkness; nor for the destruction that wasteth at noonday.",
+      "A thousand shall fall at thy side, and ten thousand at thy right hand; but it shall not come nigh thee.",
+      "Only with thine eyes shalt thou behold and see the reward of the wicked.",
+      "Because thou hast made the LORD, which is my refuge, even the most High, thy habitation;",
+      "There shall no evil befall thee, neither shall any plague come nigh thy dwelling.",
+      "For he shall give his angels charge over thee, to keep thee in all thy ways.",
+      "They shall bear thee up in their hands, lest thou dash thy foot against a stone.",
+      "Thou shalt tread upon the lion and adder: the young lion and the dragon shalt thou trample under feet.",
+      "Because he hath set his love upon me, therefore will I deliver him: I will set him on high, because he hath known my name.",
+      "He shall call upon me, and I will answer him: I will be with him in trouble; I will deliver him, and honour him.",
+      "With long life will I satisfy him, and shew him my salvation."
+    ];
+    const COUNT = VERSES.length;
+    const state = { view: "cover", mode: "page", theme: "paper", current: 1, speaking: null, copied: null };
+    let lock = false;
+    let copyTimer = 0;
+    let startX = 0;
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+    function clamp(n) { return Math.min(COUNT, Math.max(1, n)); }
+    function rich(text) {
+      return text.replaceAll("LORD", '<span class="lord">Lord</span>');
+    }
+    function readSaved() {
+      const raw = localStorage.getItem("psalm91:verse");
+      const n = Number(raw);
+      return Number.isInteger(n) && n >= 1 && n <= COUNT ? n : null;
+    }
+    function applyTheme() {
+      if (state.theme === "night") document.documentElement.dataset.theme = "night";
+      else delete document.documentElement.dataset.theme;
+      const label = state.theme === "paper" ? "Night" : "Paper";
+      document.getElementById("cover-theme").textContent = label;
+      document.getElementById("theme").textContent = label;
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = state.theme === "night" ? "#12110e" : "#f4efe6";
+    }
+    function paintChrome() {
+      document.getElementById("mode").textContent = state.mode === "page" ? "One verse" : "Full page";
+      document.getElementById("meter").style.width = (state.current / COUNT) * 100 + "%";
+      document.querySelectorAll(".index button").forEach((button) => {
+        const on = Number(button.dataset.n) === state.current;
+        if (on) button.setAttribute("aria-current", "true");
+        else button.removeAttribute("aria-current");
+      });
+      document.querySelectorAll(".verse").forEach((node) => {
+        node.classList.toggle("is-current", Number(node.dataset.verse) === state.current);
+      });
+      const text = VERSES[state.current - 1];
+      document.getElementById("dwell-kicker").textContent = state.current >= 14 ? "THE REPLY" : "PSALM 91";
+      document.getElementById("dwell-num").textContent = pad(state.current);
+      document.getElementById("dwell-text").innerHTML = rich(text);
+      document.getElementById("dwell-count").textContent = state.current + " of " + COUNT;
+      document.getElementById("prev").disabled = state.current === 1;
+      document.getElementById("next").disabled = state.current === COUNT;
+      document.getElementById("dwell-copy").textContent = state.copied === state.current ? "Copied" : "Copy";
+      document.getElementById("dwell-listen").textContent = state.speaking === state.current ? "Stop" : "Listen";
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        const n = Number(button.dataset.copy);
+        button.textContent = state.copied === n ? "Copied" : "Copy";
+      });
+      document.querySelectorAll("[data-listen]").forEach((button) => {
+        const n = Number(button.dataset.listen);
+        button.textContent = state.speaking === n ? "Stop" : "Listen";
+      });
+      const page = document.getElementById("page");
+      const dwell = document.getElementById("dwell");
+      if (state.view !== "reading") return;
+      page.hidden = state.mode !== "page";
+      dwell.hidden = state.mode !== "dwell";
+    }
+    function show(view) {
+      state.view = view;
+      document.getElementById("cover").hidden = view !== "cover";
+      document.getElementById("room").hidden = view !== "reading";
+      if (view === "cover") window.scrollTo(0, 0);
+      paintChrome();
+    }
+    function remember(n) {
+      localStorage.setItem("psalm91:verse", String(n));
+      const resume = document.getElementById("resume");
+      if (n > 1) {
+        resume.hidden = false;
+        resume.textContent = "Continue at verse " + n;
+      }
+    }
+    function goTo(n, scroll) {
+      state.current = clamp(n);
+      remember(state.current);
+      paintChrome();
+      if (scroll && state.mode === "page" && state.view === "reading") {
+        lock = true;
+        document.getElementById("verse-" + state.current)?.scrollIntoView({ behavior: "smooth", block: "center" });
+        window.setTimeout(() => { lock = false; }, 800);
+      }
+    }
+    function openAt(n, mode) {
+      state.mode = mode;
+      localStorage.setItem("psalm91:mode", mode);
+      show("reading");
+      goTo(n, mode === "page");
+    }
+    function toggleTheme() {
+      state.theme = state.theme === "paper" ? "night" : "paper";
+      localStorage.setItem("psalm91:theme", state.theme);
+      applyTheme();
+    }
+    async function copyVerse(n) {
+      const line = "Psalm 91:" + n + " — " + VERSES[n - 1];
+      try {
+        await navigator.clipboard.writeText(line);
+        state.copied = n;
+        paintChrome();
+        window.clearTimeout(copyTimer);
+        copyTimer = window.setTimeout(() => { state.copied = null; paintChrome(); }, 1600);
+      } catch (e) { /* clipboard may be blocked */ }
+    }
+    function speakVerse(n) {
+      if (!("speechSynthesis" in window)) return;
+      if (state.speaking === n) {
+        window.speechSynthesis.cancel();
+        state.speaking = null;
+        paintChrome();
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance("Psalm 91, verse " + n + ". " + VERSES[n - 1].replaceAll("LORD", "Lord"));
+      utterance.rate = 0.92;
+      utterance.onend = utterance.onerror = () => { state.speaking = null; paintChrome(); };
+      state.speaking = n;
+      paintChrome();
+      window.speechSynthesis.speak(utterance);
+    }
+    function build() {
+      const index = document.getElementById("index");
+      const page = document.getElementById("page");
+      VERSES.forEach((text, i) => {
+        const n = i + 1;
+        const li = document.createElement("li");
+        const jump = document.createElement("button");
+        jump.type = "button";
+        jump.dataset.n = String(n);
+        jump.textContent = String(n);
+        jump.addEventListener("click", () => goTo(n, true));
+        li.append(jump);
+        index.append(li);
+      });
+
+      const intro = document.createElement("div");
+      intro.className = "intro";
+      intro.innerHTML = '<p class="mark">A SONG OF SHELTER</p><p class="blurb">Sixteen verses. The promise is spoken first. The last three are the reply. This is the King James text, set to be read slowly.</p>';
+      page.append(intro);
+
+      VERSES.forEach((text, i) => {
+        const n = i + 1;
+        if (n === 14) {
+          const reply = document.createElement("div");
+          reply.className = "reply";
+          reply.innerHTML = '<p class="mark">THE REPLY</p><p>The voice changes. What follows is spoken back to the one who has taken refuge.</p>';
+          page.append(reply);
+        }
+        const article = document.createElement("article");
+        article.className = "verse";
+        article.id = "verse-" + n;
+        article.dataset.verse = String(n);
+        article.innerHTML =
+          '<span class="num">' + pad(n) + '</span><div><p>' + rich(text) + '</p><div class="verse-actions"><button class="ghost" type="button" data-copy="' + n + '">Copy</button><button class="ghost" type="button" data-listen="' + n + '">Listen</button></div></div>';
+        page.append(article);
+      });
+
+      const colophon = document.createElement("footer");
+      colophon.className = "colophon";
+      colophon.innerHTML = '<h2>Set for Axel Macedo.</h2><p>King James Version, 1611. Public domain. The reading place is kept on this device, and nowhere else.</p><p><a href="https://github.com/axel-macedo">github.com/axel-macedo</a></p>';
+      page.append(colophon);
+
+      page.addEventListener("click", (event) => {
+        const copy = event.target.closest("[data-copy]");
+        const listen = event.target.closest("[data-listen]");
+        if (copy) copyVerse(Number(copy.dataset.copy));
+        if (listen) speakVerse(Number(listen.dataset.listen));
+      });
+    }
+    function watch() {
+      const nodes = document.querySelectorAll("[data-verse]");
+      const observer = new IntersectionObserver((entries) => {
+        if (lock || state.view !== "reading" || state.mode !== "page") return;
+        const hit = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!hit) return;
+        const n = Number(hit.target.dataset.verse);
+        if (!Number.isInteger(n) || n === state.current) return;
+        state.current = n;
+        remember(n);
+        paintChrome();
+      }, { rootMargin: "-35% 0px -50% 0px", threshold: [0.25, 0.6] });
+      nodes.forEach((node) => observer.observe(node));
+    }
+
+    document.getElementById("begin").addEventListener("click", () => openAt(1, "page"));
+    document.getElementById("one").addEventListener("click", () => openAt(readSaved() || state.current, "dwell"));
+    document.getElementById("resume").addEventListener("click", () => openAt(readSaved() || 1, state.mode));
+    document.getElementById("cover-theme").addEventListener("click", toggleTheme);
+    document.getElementById("theme").addEventListener("click", toggleTheme);
+    document.getElementById("home").addEventListener("click", () => show("cover"));
+    document.getElementById("mode").addEventListener("click", () => {
+      const next = state.mode === "page" ? "dwell" : "page";
+      state.mode = next;
+      localStorage.setItem("psalm91:mode", next);
+      paintChrome();
+      if (next === "page") goTo(state.current, true);
+    });
+    document.getElementById("prev").addEventListener("click", () => goTo(state.current - 1, false));
+    document.getElementById("next").addEventListener("click", () => goTo(state.current + 1, false));
+    document.getElementById("dwell-copy").addEventListener("click", () => copyVerse(state.current));
+    document.getElementById("dwell-listen").addEventListener("click", () => speakVerse(state.current));
+    document.getElementById("dwell-stage").addEventListener("pointerdown", (event) => { startX = event.clientX; });
+    document.getElementById("dwell-stage").addEventListener("pointerup", (event) => {
+      const delta = event.clientX - startX;
+      if (delta > 56) goTo(state.current - 1, false);
+      else if (delta < -56) goTo(state.current + 1, false);
+    });
+    window.addEventListener("keydown", (event) => {
+      if (state.view !== "reading") return;
+      if (event.key === "Escape") { show("cover"); return; }
+      if (state.mode === "dwell" && (event.key === "ArrowRight" || event.key === "ArrowDown")) {
+        event.preventDefault();
+        goTo(state.current + 1, false);
+      } else if (state.mode === "dwell" && (event.key === "ArrowLeft" || event.key === "ArrowUp")) {
+        event.preventDefault();
+        goTo(state.current - 1, false);
+      } else if (event.key === "j") goTo(state.current + 1, true);
+      else if (event.key === "k") goTo(state.current - 1, true);
+    });
+
+    state.theme = localStorage.getItem("psalm91:theme") === "night" ? "night" : "paper";
+    state.mode = localStorage.getItem("psalm91:mode") === "dwell" ? "dwell" : "page";
+    const saved = readSaved();
+    if (saved) {
+      state.current = saved;
+      if (saved > 1) {
+        const resume = document.getElementById("resume");
+        resume.hidden = false;
+        resume.textContent = "Continue at verse " + saved;
+      }
+    }
+    applyTheme();
+    build();
+    watch();
+    paintChrome();
+    window.addEventListener("pagehide", () => { if ("speechSynthesis" in window) window.speechSynthesis.cancel(); });
+  </script>
 </body>
 </html>
